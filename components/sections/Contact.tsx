@@ -14,11 +14,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Mail, MapPin, Phone } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { Mail, MapPin, Phone, CheckCircle } from "lucide-react";
 
 export default function Contact() {
-  const t = useTranslations("contact");
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -57,7 +55,7 @@ export default function Contact() {
         message: "",
       });
     } catch (err) {
-      setError(t("errorMessage"));
+      setError("Something went wrong. Please try again.");
       console.error("Error submitting form:", err);
     } finally {
       setIsSubmitting(false);
@@ -65,83 +63,97 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="w-full py-12 md:py-24 lg:py-32">
+    <section
+      id="contact"
+      className="w-full py-20 md:py-28 lg:py-36 overflow-hidden"
+    >
       <div className="container px-4 md:px-6">
-        <div className="flex flex-col items-center justify-center space-y-4 text-center">
-          <div className="space-y-2">
-            <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
-              {t("title")}
-            </h2>
-            <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-              {t("subtitle")}
-            </p>
+        <div className="flex flex-col items-center text-center space-y-4 mb-16">
+          <div className="inline-block rounded-full bg-primary/10 px-4 py-1.5 text-sm font-medium text-primary mb-4">
+            Contact Us
           </div>
+          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
+            Get in touch
+          </h2>
+          <p className="mx-auto max-w-[700px] text-muted-foreground text-lg">
+            Have questions or ready to get started? Reach out to our team today.
+          </p>
         </div>
-        <div className="mx-auto grid max-w-6xl gap-6 py-12 lg:grid-cols-2">
-          <Card>
+
+        <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
+          <Card className="border-border bg-background/50 backdrop-blur-sm">
             <CardHeader>
-              <CardTitle>{t("formTitle")}</CardTitle>
-              <CardDescription>{t("formSubtitle")}</CardDescription>
+              <CardTitle>Send us a message</CardTitle>
+              <CardDescription>
+                We'll get back to you as soon as possible.
+              </CardDescription>
             </CardHeader>
             <CardContent>
               {isSuccess ? (
                 <div className="flex flex-col items-center justify-center space-y-4 py-12">
                   <div className="rounded-full bg-primary/10 p-3">
-                    <Mail className="h-6 w-6 text-primary" />
+                    <CheckCircle className="h-8 w-8 text-primary" />
                   </div>
-                  <h3 className="text-xl font-semibold">{t("successTitle")}</h3>
+                  <h3 className="text-xl font-semibold">Message Sent!</h3>
                   <p className="text-center text-muted-foreground">
-                    {t("successMessage")}
+                    Thank you for reaching out. We'll get back to you shortly.
                   </p>
-                  <Button onClick={() => setIsSuccess(false)}>
-                    {t("sendAnother")}
+                  <Button
+                    onClick={() => setIsSuccess(false)}
+                    className="mt-4 rounded-full"
+                  >
+                    Send Another Message
                   </Button>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="grid gap-4">
                   <div className="grid gap-2">
-                    <Label htmlFor="name">{t("nameLabel")}</Label>
+                    <Label htmlFor="name">Name</Label>
                     <Input
                       id="name"
                       name="name"
-                      placeholder={t("namePlaceholder")}
+                      placeholder="Enter your name"
                       value={formData.name}
                       onChange={handleChange}
                       required
+                      className="rounded-md"
                     />
                   </div>
                   <div className="grid gap-2">
-                    <Label htmlFor="email">{t("emailLabel")}</Label>
+                    <Label htmlFor="email">Email</Label>
                     <Input
                       id="email"
                       name="email"
                       type="email"
-                      placeholder={t("emailPlaceholder")}
+                      placeholder="Enter your email"
                       value={formData.email}
                       onChange={handleChange}
                       required
+                      className="rounded-md"
                     />
                   </div>
                   <div className="grid gap-2">
-                    <Label htmlFor="subject">{t("subjectLabel")}</Label>
+                    <Label htmlFor="subject">Subject</Label>
                     <Input
                       id="subject"
                       name="subject"
-                      placeholder={t("subjectPlaceholder")}
+                      placeholder="What's this about?"
                       value={formData.subject}
                       onChange={handleChange}
                       required
+                      className="rounded-md"
                     />
                   </div>
                   <div className="grid gap-2">
-                    <Label htmlFor="message">{t("messageLabel")}</Label>
+                    <Label htmlFor="message">Message</Label>
                     <Textarea
                       id="message"
                       name="message"
-                      placeholder={t("messagePlaceholder")}
+                      placeholder="Tell us what you need help with..."
                       value={formData.message}
                       onChange={handleChange}
                       required
+                      className="min-h-[120px] rounded-md"
                     />
                   </div>
                   {error && (
@@ -149,56 +161,80 @@ export default function Contact() {
                       {error}
                     </div>
                   )}
-                  <Button type="submit" disabled={isSubmitting}>
-                    {isSubmitting ? t("submitting") : t("submit")}
+                  <Button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="rounded-full mt-2"
+                  >
+                    {isSubmitting ? "Sending..." : "Send Message"}
                   </Button>
                 </form>
               )}
             </CardContent>
           </Card>
-          <Card>
-            <CardHeader>
-              <CardTitle>{t("contactInfoTitle")}</CardTitle>
-              <CardDescription>{t("contactInfoSubtitle")}</CardDescription>
-            </CardHeader>
-            <CardContent className="grid gap-6">
-              <div className="flex items-start gap-4">
-                <MapPin className="h-6 w-6 text-primary" />
-                <div>
-                  <h3 className="font-semibold">{t("addressTitle")}</h3>
-                  <p className="text-sm text-muted-foreground">
-                    123 Business Street
-                    <br />
-                    Suite 100
-                    <br />
-                    New York, NY 10001
-                  </p>
+
+          <div className="space-y-8">
+            <div className="bg-muted/50 rounded-xl p-6 backdrop-blur-sm">
+              <h3 className="text-xl font-semibold mb-4">Our Offices</h3>
+              <div className="space-y-6">
+                <div className="flex items-start gap-4">
+                  <MapPin className="h-6 w-6 text-primary shrink-0 mt-1" />
+                  <div>
+                    <h4 className="font-medium">Headquarters</h4>
+                    <p className="text-muted-foreground">
+                      123 Business Avenue
+                      <br />
+                      Suite 100
+                      <br />
+                      New York, NY 10001
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <MapPin className="h-6 w-6 text-primary shrink-0 mt-1" />
+                  <div>
+                    <h4 className="font-medium">West Coast Office</h4>
+                    <p className="text-muted-foreground">
+                      456 Tech Boulevard
+                      <br />
+                      Floor 4<br />
+                      San Francisco, CA 94105
+                    </p>
+                  </div>
                 </div>
               </div>
-              <div className="flex items-start gap-4">
-                <Mail className="h-6 w-6 text-primary" />
-                <div>
-                  <h3 className="font-semibold">{t("emailTitle")}</h3>
-                  <p className="text-sm text-muted-foreground">
-                    info@businesspro.com
-                    <br />
-                    support@businesspro.com
-                  </p>
+            </div>
+
+            <div className="bg-muted/50 rounded-xl p-6 backdrop-blur-sm">
+              <h3 className="text-xl font-semibold mb-4">
+                Contact Information
+              </h3>
+              <div className="space-y-6">
+                <div className="flex items-start gap-4">
+                  <Mail className="h-6 w-6 text-primary shrink-0 mt-1" />
+                  <div>
+                    <h4 className="font-medium">Email</h4>
+                    <p className="text-muted-foreground">
+                      info@elevate.com
+                      <br />
+                      support@elevate.com
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <Phone className="h-6 w-6 text-primary shrink-0 mt-1" />
+                  <div>
+                    <h4 className="font-medium">Phone</h4>
+                    <p className="text-muted-foreground">
+                      +1 (555) 123-4567
+                      <br />
+                      +1 (555) 987-6543
+                    </p>
+                  </div>
                 </div>
               </div>
-              <div className="flex items-start gap-4">
-                <Phone className="h-6 w-6 text-primary" />
-                <div>
-                  <h3 className="font-semibold">{t("phoneTitle")}</h3>
-                  <p className="text-sm text-muted-foreground">
-                    +1 (555) 123-4567
-                    <br />
-                    +1 (555) 987-6543
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </div>
       </div>
     </section>
