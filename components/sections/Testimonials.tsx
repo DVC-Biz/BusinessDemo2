@@ -5,7 +5,6 @@ import Image from "next/image";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
-import ProfilePlaceholder from "@/public/placeholder_profile.png";
 
 export default function Testimonials() {
   const testimonials = [
@@ -14,32 +13,32 @@ export default function Testimonials() {
         "Elevate has transformed the way we operate. The platform's intuitive design and powerful features have helped us streamline our processes and grow our business exponentially.",
       author: "Sarah Johnson",
       role: "CEO, TechStart Inc.",
-      avatar: "/placeholder.svg?height=100&width=100",
-      company: "/placeholder.svg?height=40&width=120",
+      avatar: "/profile1.svg",
+      company: "/company1.svg",
     },
     {
       quote:
         "The team at Elevate truly understands our industry and has provided invaluable guidance as we've scaled our operations globally. Their platform is a game-changer.",
       author: "Michael Chen",
       role: "COO, Global Solutions",
-      avatar: "/placeholder.svg?height=100&width=100",
-      company: "/placeholder.svg?height=40&width=120",
+      avatar: "/profile2.svg",
+      company: "/company2.svg",
     },
     {
       quote:
         "I've worked with many service providers over the years, but none have delivered the level of results and ROI that Elevate has. Their platform is exceptional.",
       author: "Jessica Williams",
       role: "Marketing Director, Retail Giant",
-      avatar: "/placeholder.svg?height=100&width=100",
-      company: "/placeholder.svg?height=40&width=120",
+      avatar: "/profile3.svg",
+      company: "/company3.svg",
     },
     {
       quote:
         "Implementing Elevate's solution has been the best decision we've made this year. Our productivity has increased by 40% and our customer satisfaction scores are at an all-time high.",
       author: "David Rodriguez",
       role: "CTO, Innovation Labs",
-      avatar: "/placeholder.svg?height=100&width=100",
-      company: "/placeholder.svg?height=40&width=120",
+      avatar: "/profile4.svg",
+      company: "/company4.svg",
     },
   ];
 
@@ -103,7 +102,7 @@ export default function Testimonials() {
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-4">
                         <Image
-                          src={ProfilePlaceholder}
+                          src={testimonial.avatar}
                           alt={testimonial.author}
                           width={56}
                           height={56}
@@ -119,7 +118,7 @@ export default function Testimonials() {
                         </div>
                       </div>
                       <Image
-                        src={ProfilePlaceholder}
+                        src={testimonial.company}
                         alt="Company logo"
                         width={120}
                         height={40}
